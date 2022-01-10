@@ -2,7 +2,6 @@ package tfip.ssf.Workshop13;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -12,8 +11,6 @@ import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import ch.qos.logback.classic.Logger;
-
 @SpringBootApplication
 public class MyApp {
 	
@@ -21,6 +18,7 @@ public class MyApp {
 		SpringApplication myapp = new SpringApplication(MyApp.class);
 
 		ApplicationArguments appArgs = new DefaultApplicationArguments(args);
+		System.out.println(appArgs);
 
 		List optVal = appArgs.getOptionValues("dataDir");
 		System.out.println(optVal);

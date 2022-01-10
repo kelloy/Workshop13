@@ -21,7 +21,6 @@ public class contact implements Serializable {
         this.email = email;
     }
 
-    
 
     /**
      * @return String return the name

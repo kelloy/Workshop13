@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ import tfip.ssf.Workshop13.model.contact;
 @Controller
 
 public class contactController {
+    @Autowired
+    private ApplicationArguments appArgs;
 
 
     @GetMapping("/contact")
@@ -41,7 +45,7 @@ public class contactController {
         details.add(email);
         details.add(phone);
         details.add(hexId);
-        if(helper.createFile(hexId, details)){
+        if(helper.createFile(hexId, details,appArgs)){
             String message = "201";
             model.addAttribute("message",message);
         }
@@ -53,7 +57,7 @@ public class contactController {
         @GetMapping("/contact/{id}")
         public String displaydetails(@ModelAttribute contact contact, Model model,@PathVariable String id){
             List<String> detailList = new ArrayList<>();
-            detailList = helper.readFiles(id);
+            detailList = helper.readFiles(id,appArgs);
             contact = new contact();
             String name = detailList.get(0);
             String email = detailList.get(1);

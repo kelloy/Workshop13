@@ -2,11 +2,7 @@ package tfip.ssf.Workshop13.helper;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.catalina.connector.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
 
 
 public class helper{
@@ -37,8 +34,10 @@ public class helper{
         return generatedString;
 }
 
-    public static Boolean createFile(String s,List<String> details){
-        String filepath = s + ".txt";
+    public static Boolean createFile(String s,List<String> details, ApplicationArguments applicationArguments){
+        String dirPath = (String) applicationArguments.getOptionValues("dataDir").get(0);
+        String filepath = dirPath +"//"+ s + ".txt";
+        System.out.println(filepath);
         try {
             FileWriter writer = new FileWriter(filepath, StandardCharsets.UTF_8);
             for(String str :details){
@@ -51,8 +50,9 @@ public class helper{
         }
     }
 
-    public static List<String> readFiles(String string){
-        String FilePath = System.getProperty("user.dir")+"\\"+string+".txt";
+    public static List<String> readFiles(String string, ApplicationArguments applicationArguments){
+        String dirPath = (String) applicationArguments.getOptionValues("dataDir").get(0);
+        String FilePath = dirPath+"\\"+string+".txt";
         System.out.println(FilePath);
         Path filepath = Paths.get(FilePath);
         List<String> lines = new ArrayList<>();
@@ -64,9 +64,16 @@ public class helper{
         return lines;
     }
 
-
-
+    public boolean createDir(String path){
+        File dir = new File(path);
+        return dir.mkdirs();
+    }
 }
+    
+
+
+
+
     
 
 
